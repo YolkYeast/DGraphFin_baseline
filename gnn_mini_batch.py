@@ -96,7 +96,7 @@ def test(layer_loader, model, data, split_idx, evaluator, device, no_conv=False)
 def main():
     parser = argparse.ArgumentParser(description='minibatch_gnn_models')
     parser.add_argument('--device', type=int, default=0)
-    parser.add_argument('--dataset', type=str, default='DGraphFin')
+    parser.add_argument('--dataset', type=str, default='dgraph-fin')
     parser.add_argument('--log_steps', type=int, default=10)
     parser.add_argument('--model', type=str, default='mlp')
     parser.add_argument('--use_embeddings', action='store_true')
@@ -113,15 +113,15 @@ def main():
     device = f'cuda:{args.device}' if torch.cuda.is_available() else 'cpu'
     device = torch.device(device)
 
-    dataset = DGraphFin(root='./dataset/', name=args.dataset, transform=T.ToSparseTensor())
+    dataset = DGraphFin(root='../input/', name=args.dataset, transform=T.ToSparseTensor())
     
     nlabels = dataset.num_classes
-    if args.dataset =='DGraphFin': nlabels = 2
+    if args.dataset =='dgraph-fin': nlabels = 2
         
     data = dataset[0]
     data.adj_t = data.adj_t.to_symmetric()
         
-    if args.dataset in ['DGraphFin']:
+    if args.dataset in ['dgraph-fin']:
         x = data.x
         x = (x-x.mean(0))/x.std(0)
         data.x = x

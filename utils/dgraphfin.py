@@ -62,7 +62,7 @@ class DGraphFin(InMemoryDataset):
 
     @property
     def raw_dir(self) -> str:
-        return osp.join(self.root, self.name, 'raw')
+        return osp.join(self.root, self.name, '')
 
     @property
     def processed_dir(self) -> str:
